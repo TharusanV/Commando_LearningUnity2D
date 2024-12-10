@@ -37,10 +37,10 @@ public class PlayerController : MonoBehaviour
 
     private void CheckMovementDirection(){
         if(isFacingRight && movementInputDirection < 0){
-            Flip();
+            //Flip();
         }
         else if(!isFacingRight && movementInputDirection > 0){
-            Flip();
+            //Flip();
         }
     }
 
@@ -56,12 +56,12 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(movementInputDirection * movementSpeed, rb.velocity.y);
     }
 
+    private void Jump(){
+        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+    }
+
     private void Flip(){
         isFacingRight = !isFacingRight;
         transform.Rotate(0.0f, 180.0f, 0.0f);
-    }
-
-    private void Jump(){
-        rb.velocity = new Vector2(rb.velocity.x, jumpForce);
     }
 }
