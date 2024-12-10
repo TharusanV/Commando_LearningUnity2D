@@ -8,10 +8,8 @@ public class PlayerController : MonoBehaviour
 {
     public float movementSpeed = 5f;
     public float jumpForce = 16f;
-
     private float movementInputDirection;
 
-    private bool isFacingRight = false;
 
     private Rigidbody2D rb;
 
@@ -20,28 +18,17 @@ public class PlayerController : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
         
     }
 
     // Update is called once per frame
     void Update(){
         CheckInput();
-        CheckMovementDirection();
     }
 
     private void FixedUpdate(){
         ApplyMovement();
-    }
-
-    private void CheckMovementDirection(){
-        if(isFacingRight && movementInputDirection < 0){
-            //Flip();
-        }
-        else if(!isFacingRight && movementInputDirection > 0){
-            //Flip();
-        }
     }
 
     private void CheckInput(){
@@ -60,8 +47,4 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
     }
 
-    private void Flip(){
-        isFacingRight = !isFacingRight;
-        transform.Rotate(0.0f, 180.0f, 0.0f);
-    }
 }

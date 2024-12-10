@@ -36,24 +36,26 @@ public class PlayerArmsParent : MonoBehaviour
         if(angle + offset > 0 && angle + offset < 180){
             transform.rotation = Quaternion.Euler(0f, 0f, angle + offset);
             Debug.Log(angle+offset);
+
+            Vector2 playerObjScale = playerObject.transform.localScale;
+            Vector2 handsObjScale = transform.localScale;
+            
+            //Facing left
+            if(direction.x < 0){
+                playerObjScale.x = 1 * currentScalePlayerObject;
+                handsObjScale.x = -1; 
+                handsObjScale.y = -1;          
+            }
+            //Facing right
+            else if(direction.x > 0){
+                playerObjScale.x = -1 * currentScalePlayerObject;
+                handsObjScale.x = 1;
+                handsObjScale.y = 1;  
+            }
+            playerObject.transform.localScale = playerObjScale;
+            transform.localScale = handsObjScale;
         }
 
-        Vector2 playerObjScale = playerObject.transform.localScale;
-        Vector2 handsObjScale = transform.localScale;
-        
-        //Facing left
-        if(direction.x < 0){
-            playerObjScale.x = 1 * currentScalePlayerObject;
-            handsObjScale.x = -1; 
-            handsObjScale.y = -1;          
-        }
-        //Facing right
-        else if(direction.x > 0){
-            playerObjScale.x = -1 * currentScalePlayerObject;
-            handsObjScale.x = 1;
-            handsObjScale.y = 1;  
-        }
-        playerObject.transform.localScale = playerObjScale;
-        transform.localScale = handsObjScale;
+
     }
 }
