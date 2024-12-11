@@ -13,8 +13,12 @@ public class PlayerArmsParent : MonoBehaviour
 
     public float currentScalePlayerObject;
 
+    private PlayerController playerControllerScript;
+
     void Awake(){
         currentScalePlayerObject = playerObject.transform.localScale.x;
+
+        playerControllerScript = playerObject.GetComponent<PlayerController>();
     }
 
     // Start is called before the first frame update
@@ -35,19 +39,22 @@ public class PlayerArmsParent : MonoBehaviour
         
         if(angle + offset > 0 && angle + offset < 180){
             transform.rotation = Quaternion.Euler(0f, 0f, angle + offset);
-            Debug.Log(angle+offset);
 
             Vector2 playerObjScale = playerObject.transform.localScale;
             Vector2 handsObjScale = transform.localScale;
             
             //Facing left
             if(direction.x < 0){
+                playerControllerScript.facingDirection = -1;
+
                 playerObjScale.x = 1 * currentScalePlayerObject;
                 handsObjScale.x = -1; 
                 handsObjScale.y = -1;          
             }
             //Facing right
             else if(direction.x > 0){
+                playerControllerScript.facingDirection = 1;
+
                 playerObjScale.x = -1 * currentScalePlayerObject;
                 handsObjScale.x = 1;
                 handsObjScale.y = 1;  

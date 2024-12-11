@@ -2517,6 +2517,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1467019687
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1467019688}
+  m_Layer: 0
+  m_Name: WallCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1467019688
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467019687}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.15, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2525095017285121150}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1504791704
 GameObject:
   m_ObjectHideFlags: 0
@@ -3980,13 +4011,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
-  jumpForce: 16
-  amountOfJumps: 1
   groundCheckRadius: 0.3
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+  wallCheckDistance: 0.7
+  jumpForce: 16
+  amountOfJumps: 1
+  movementForceInAir: 10
+  airDragMultiplier: 0.95
   groundCheckObj: {fileID: 1139024752}
+  wallJumpDirection: {x: 1, y: 2}
+  wallJumpForce: 20
+  wallSlidingSpeed: 1
+  wallCheckObj: {fileID: 1467019688}
 --- !u!4 &2525095017285121150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8784768135264516128, guid: 7c605b2d874bf504eb3f0ba6c8d3ddf8, type: 3}
