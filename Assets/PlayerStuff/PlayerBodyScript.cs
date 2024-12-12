@@ -36,7 +36,7 @@ public class PlayerBodyScript : MonoBehaviour
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        Debug.Log(angle+5);
+        //Debug.Log(angle+5);
 
         //Left
         if(direction.x < 0){
