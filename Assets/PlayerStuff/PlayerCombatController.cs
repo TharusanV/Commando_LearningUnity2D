@@ -20,6 +20,8 @@ public class PlayerCombatController : MonoBehaviour
 
     private float lastInputTime = Mathf.NegativeInfinity; //Setting it to negative infinity will allow the player to attack as sonn as the game starts
 
+    private float[] attackDetails = new float[2];
+
     private Animator animator;
 
     // Start is called before the first frame update
@@ -63,8 +65,11 @@ public class PlayerCombatController : MonoBehaviour
     private void CheckKnifeAttackHitBox(){
         Collider2D[] detectedObjects = Physics2D.OverlapCircleAll(knifeAttackHitBoxPosition.position, knifeAttackRadius, whatIsDamageable);
 
+        attackDetails[0] = knifeAttackDamage;
+        attackDetails[1] = transform.position.x;
+
         foreach(Collider2D collider in detectedObjects){
-            collider.transform.parent.SendMessage("Damage", knifeAttackDamage);
+            collider.transform.parent.SendMessage("Damage", attackDetails);
         }
     }
 

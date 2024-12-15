@@ -16,26 +16,29 @@ public class EnemyController : MonoBehaviour
         wallCheckDistance,
         movementSpeed,
         maxHealth,
-        knockbackDuration,
-        lastTouchDamageTime,
-        touchDamageCooldown,touchDamage,touchDamageWidth,touchDamageHeight;
+        knockbackDuration;
+        //lastTouchDamageTime,
+        //touchDamageCooldown,touchDamage,touchDamageWidth,touchDamageHeight;
 
     [SerializeField]
     private Transform
         groundCheck,
-        wallCheck,
-        touchDamageCheck;
+        wallCheck;
+        //touchDamageCheck;
+    
     [SerializeField]
     private LayerMask 
         whatIsGround,
         whatIsPlayer;
+    
     [SerializeField]
     private Vector2 knockbackSpeed;
+
     [SerializeField]
     private GameObject
-        hitParticle,
-        deathChunkParticle,
-        deathBloodParticle;
+        hitParticle;
+        //deathChunkParticle,
+        //deathBloodParticle;
 
     private float 
         currentHealth,
@@ -48,9 +51,9 @@ public class EnemyController : MonoBehaviour
     public int facingDirection = -1;
 
     private Vector2 
-        movement,
-        touchDamageBotLeft,
-        touchDamageTopRight;
+        movement;
+        //touchDamageBotLeft,
+        //touchDamageTopRight;
 
     private bool
         groundDetected,
@@ -92,7 +95,7 @@ public class EnemyController : MonoBehaviour
         groundDetected = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
         wallDetected = Physics2D.Raycast(wallCheck.position, transform.right, wallCheckDistance, whatIsGround);
 
-        CheckTouchDamage();
+        //CheckTouchDamage();
 
         if(!groundDetected || wallDetected){
             Flip();
@@ -112,7 +115,7 @@ public class EnemyController : MonoBehaviour
 
     private void EnterKnockbackState()
     {
-        knockbackStartTime = Time.time;
+        knockbackStartTime = Time.time; //Keeps track of the exact time when the knockback starts
         movement.Set(knockbackSpeed.x * damageDirection, knockbackSpeed.y);
         aliveObjRb.velocity = movement;
         aliveObjAnim.SetBool("Knockback", true);
@@ -135,8 +138,8 @@ public class EnemyController : MonoBehaviour
 
     private void EnterDeadState()
     {
-        Instantiate(deathChunkParticle, aliveObj.transform.position, deathChunkParticle.transform.rotation);
-        Instantiate(deathBloodParticle, aliveObj.transform.position, deathBloodParticle.transform.rotation);
+        //Instantiate(deathChunkParticle, aliveObj.transform.position, deathChunkParticle.transform.rotation);
+        //Instantiate(deathBloodParticle, aliveObj.transform.position, deathBloodParticle.transform.rotation);
         Destroy(gameObject);
     }
 
@@ -152,33 +155,29 @@ public class EnemyController : MonoBehaviour
 
     //--OTHER FUNCTIONS--------------------------------------------------------------------------------
 
-    private void Damage(float[] attackDetails) //We are using an array as the sendMessage function only allows one paramater so we need to use an array to allow for multiple, in this case the send message would find all the objects hit by the player
+    private void Damage(float[] attackDetails) //We are using an array as the sendMessage function (which we are using when the player hits something) as it only allows for one paramater to be sent in so we need to use an array to send multiple parameters, in this case the attackDamage, X location of the person doing the attack to determine which side the person is standing on to know where they should be knocked back
     {
-        currentHealth -= attackDetails[0];
+        currentHealth -= attackDetails[0]; //Attack damage will be at 0 index
 
         Instantiate(hitParticle, aliveObj.transform.position, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)));
 
-        if(attackDetails[1] > aliveObj.transform.position.x)
-        {
-            damageDirection = -1;
+        if(attackDetails[1] > aliveObj.transform.position.x){ //the attacker's x position would be the 1 index
+            damageDirection = -1; //This means the attacker/player is facing the enemy
         }
-        else
-        {
-            damageDirection = 1;
+        else{
+            damageDirection = 1; //This means the attack/player is not facing the enemy
         }
 
         //Hit particle
-
-        if(currentHealth > 0.0f)
-        {
+        if(currentHealth > 0.0f){ //Enemy still alive
             SwitchState(State.Knockback);
         }
-        else if(currentHealth <= 0.0f)
-        {
+        else if(currentHealth <= 0.0f){
             SwitchState(State.Dead);
         }
     }
 
+    /*
     private void CheckTouchDamage()
     {
         if(Time.time >= lastTouchDamageTime + touchDamageCooldown)
@@ -197,6 +196,7 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
+    */
 
     private void Flip()
     {
@@ -237,7 +237,7 @@ public class EnemyController : MonoBehaviour
     {
         Gizmos.DrawLine(groundCheck.position, new Vector2(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
         Gizmos.DrawLine(wallCheck.position, new Vector2(wallCheck.position.x + wallCheckDistance, wallCheck.position.y));
-
+        /*
         Vector2 botLeft = new Vector2(touchDamageCheck.position.x - (touchDamageWidth / 2), touchDamageCheck.position.y - (touchDamageHeight / 2));
         Vector2 botRight = new Vector2(touchDamageCheck.position.x + (touchDamageWidth / 2), touchDamageCheck.position.y - (touchDamageHeight / 2));
         Vector2 topRight = new Vector2(touchDamageCheck.position.x + (touchDamageWidth / 2), touchDamageCheck.position.y + (touchDamageHeight / 2));
@@ -247,6 +247,7 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawLine(botRight, topRight);
         Gizmos.DrawLine(topRight, topLeft);
         Gizmos.DrawLine(topLeft, botLeft);
+        */
     }
 
 }
